@@ -11,6 +11,9 @@ public class Player {
     private boolean hasWon;
     private String playerType;
     private boolean currentTurn;
+    private String playerName;
+
+
 
     public Player(int playerNo, String playerType, boolean currentTurn){
         setPlayerNo(playerNo);
@@ -18,6 +21,8 @@ public class Player {
         setCurrentTurn(false);
 
         setPlayerType("human");
+
+        setPlayerName("Player "+ playerNo);
 
         setHasWon(false);
     }
@@ -36,6 +41,14 @@ public class Player {
 
     public void setPlayerType(String playerType) {
         this.playerType = playerType;
+    }
+
+    public String getPlayerName(){
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName){
+        this.playerName = playerName;
     }
 
     public int getPlayerNo() {

@@ -52,13 +52,34 @@ public class noughts_n_crosses extends ApplicationAdapter {
 		batch.draw(backgrnd, (SCREEN_WIDTH - backgrnd.getWidth()) / 2, 0);
 		boardManager.update(batch, backgrnd, nought, cross);
 		if (boardManager.getGameStatus().equals("Start")){
-			BitmapFont font = new BitmapFont();
-			font.getData().setScale(4);
-			font.draw(batch, "Welcome to Noughts and Crosses", SCREEN_WIDTH/3, SCREEN_HEIGHT / 2);
+			drawFont("Welcome to Noughts and Crosses");
 		}
+
+		Player currentPlayer;
+		if (playerOne.getCurrentTurn())
+			currentPlayer = playerOne;
+		else
+			currentPlayer = playerTwo;
+		if (boardManager.hasWon(currentPlayer)!=null) {
+			boardManager.setGameStatus(currentPlayer.getPlayerName() + " has won");
+			drawFont(boardManager.getGameStatus());
+		}
+
+		if(boardManager.getGameStatus().equals("Game finished"))
+			drawFont("Game Finished");
+
+
+
 
 		batch.end();
 		handleInput();
+
+	}
+
+	public void drawFont(String textString){
+		BitmapFont font = new BitmapFont();
+		font.getData().setScale(4);
+		font.draw(batch, textString, SCREEN_WIDTH/3, SCREEN_HEIGHT / 2);
 	}
 
 
@@ -78,12 +99,13 @@ public class noughts_n_crosses extends ApplicationAdapter {
 				else
 					currentPlayer = playerTwo;
 				chooseSquareTouched(touchPosn, currentPlayer);
+				boardManager.hasWon(currentPlayer);
 				playerOne.setCurrentTurn(!playerOne.getCurrentTurn());
 				playerTwo.setCurrentTurn(!playerTwo.getCurrentTurn());
 			}
-			else if(boardManager.getGameStatus().equals("Game finished")){
-				newGame();
-				boardManager.setGameStatus("Playing");}
+			else if(boardManager.getGameStatus().equals("Game finished")||boardManager.getGameStatus().endsWith("has won")){
+			newGame();
+			boardManager.setGameStatus("Playing");}
 		}
 	}
 
@@ -100,5 +122,6 @@ public class noughts_n_crosses extends ApplicationAdapter {
 		playerOne.setCurrentTurn(true);
 		playerTwo.setCurrentTurn(false);
 		boardManager.clearBoard();
+		boardManager.resetTurnCounter();
 	}
 }
