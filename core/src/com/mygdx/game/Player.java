@@ -53,8 +53,6 @@ public class Player {
         return playerType;
     }
 
-    public boolean getHasWon(){
-        return hasWon;
-    }
+    public boolean getHasWon(){ return hasWon; }
 
 }

@@ -56,7 +56,7 @@ public class noughts_n_crosses extends ApplicationAdapter {
 		}
 
 		Player currentPlayer;
-		if (boardManager.getPlayerTurn()==1)
+		if (boardManager.getPlayerTurn()==2)
 			currentPlayer = playerOne;
 		else
 			currentPlayer = playerTwo;
@@ -66,7 +66,7 @@ public class noughts_n_crosses extends ApplicationAdapter {
 		}
 
 		if(boardManager.getGameStatus().equals("Game finished"))
-			drawFont("Game Finished");
+			drawFont("Game Drawn");
 
 
 
