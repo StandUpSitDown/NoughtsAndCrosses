@@ -35,8 +35,8 @@ public class noughts_n_crosses extends ApplicationAdapter {
 		backgrnd = new Texture("noughts_n_crosses_backgrnd_1080x1080.png");
 		nought = new Texture("nought.png");
 		cross = new Texture("cross.png");
-		playerOne = new Player(1,"",true);
-		playerTwo = new Player(2,"",false);
+		playerOne = new Player(1,"");
+		playerTwo = new Player(2,"");
 		boardManager = new BoardManager();
 
 		newGame();
@@ -117,8 +117,7 @@ public class noughts_n_crosses extends ApplicationAdapter {
 	}
 
 	private void newGame() {
-		playerOne.setCurrentTurn(true);
-		playerTwo.setCurrentTurn(false);
+		boardManager.setPlayerTurn(1);
 		boardManager.clearBoard();
 		boardManager.resetTurnCounter();
 	}

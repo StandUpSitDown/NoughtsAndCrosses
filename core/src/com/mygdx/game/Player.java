@@ -15,20 +15,14 @@ public class Player {
 
 
 
-    public Player(int playerNo, String playerType, boolean currentTurn){
+    public Player(int playerNo, String playerType){
         setPlayerNo(playerNo);
-
-        setCurrentTurn(false);
 
         setPlayerType("human");
 
         setPlayerName("Player "+ playerNo);
 
         setHasWon(false);
-    }
-
-    public void setCurrentTurn(boolean currentTurn) {
-        this.currentTurn = currentTurn;
     }
 
     public void setHasWon(boolean hasWon) {
@@ -63,7 +57,4 @@ public class Player {
         return hasWon;
     }
 
-    public boolean getCurrentTurn(){
-       return currentTurn;
-    }
 }
