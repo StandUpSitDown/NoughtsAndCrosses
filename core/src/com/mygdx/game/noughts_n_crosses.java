@@ -56,7 +56,7 @@ public class noughts_n_crosses extends ApplicationAdapter {
 		}
 
 		Player currentPlayer;
-		if (playerOne.getCurrentTurn())
+		if (boardManager.getPlayerTurn()==1)
 			currentPlayer = playerOne;
 		else
 			currentPlayer = playerTwo;
@@ -94,14 +94,12 @@ public class noughts_n_crosses extends ApplicationAdapter {
 				Vector3 touchPosn = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 				camera.unproject(touchPosn);
 				Player currentPlayer;
-				if (playerOne.getCurrentTurn())
+				if (boardManager.getPlayerTurn()==1)
 					currentPlayer = playerOne;
 				else
 					currentPlayer = playerTwo;
 				chooseSquareTouched(touchPosn, currentPlayer);
 				boardManager.hasWon(currentPlayer);
-				playerOne.setCurrentTurn(!playerOne.getCurrentTurn());
-				playerTwo.setCurrentTurn(!playerTwo.getCurrentTurn());
 			}
 			else if(boardManager.getGameStatus().equals("Game finished")||boardManager.getGameStatus().endsWith("has won")){
 			newGame();
