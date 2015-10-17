@@ -35,8 +35,8 @@ public class noughts_n_crosses extends ApplicationAdapter {
 		backgrnd = new Texture("noughts_n_crosses_backgrnd_1080x1080.png");
 		nought = new Texture("nought.png");
 		cross = new Texture("cross.png");
-		playerOne = new Player(1,"");
-		playerTwo = new Player(2,"");
+		playerOne = new Player(1);
+		playerTwo = new Player(2);
 		boardManager = new BoardManager();
 
 		newGame();
