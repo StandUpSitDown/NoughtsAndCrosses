@@ -20,7 +20,8 @@ public class noughts_n_crosses extends ApplicationAdapter {
 	private Texture cross;
 	private OrthographicCamera camera;
 	private BoardManager boardManager;
-	private Player playerOne, playerTwo;
+	private Player playerOne, playerTwo, currentPlayer;
+	private FindWinner findWinner;
 
 
 
@@ -38,8 +39,9 @@ public class noughts_n_crosses extends ApplicationAdapter {
 		playerOne = new Player(1);
 		playerTwo = new Player(2);
 		boardManager = new BoardManager();
+		currentPlayer  = playerOne;
+		findWinner = new FindWinner();
 
-		newGame();
 	}
 
 	@Override
@@ -60,7 +62,9 @@ public class noughts_n_crosses extends ApplicationAdapter {
 			currentPlayer = playerOne;
 		else
 			currentPlayer = playerTwo;
-		if (boardManager.hasWon(currentPlayer)!=null) {
+
+		Player winner = findWinner.hasWon(currentPlayer, boardManager);
+		if (winner!=null){
 			boardManager.setGameStatus(currentPlayer.getPlayerName() + " has won");
 			drawFont(boardManager.getGameStatus());
 		}
@@ -76,7 +80,7 @@ public class noughts_n_crosses extends ApplicationAdapter {
 
 	}
 
-	public void drawFont(String textString){
+	private void drawFont(String textString){
 		BitmapFont font = new BitmapFont();
 		font.getData().setScale(4);
 		font.draw(batch, textString, SCREEN_WIDTH/3, SCREEN_HEIGHT / 2);
@@ -88,22 +92,22 @@ public class noughts_n_crosses extends ApplicationAdapter {
 
 		if(Gdx.input.justTouched()) {
 
-			if(boardManager.getGameStatus().equals("Start")){
-				boardManager.setGameStatus("Playing");}
+			if(boardManager.getGameStatus().equals("Start"))
+				boardManager.setGameStatus("Playing");
+
 			else if(boardManager.getGameStatus().equals("Playing")) {
 				Vector3 touchPosn = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 				camera.unproject(touchPosn);
-				Player currentPlayer;
 				if (boardManager.getPlayerTurn()==1)
 					currentPlayer = playerOne;
 				else
 					currentPlayer = playerTwo;
 				chooseSquareTouched(touchPosn, currentPlayer);
-				boardManager.hasWon(currentPlayer);
+				findWinner.hasWon(currentPlayer,boardManager);
 			}
 			else if(boardManager.getGameStatus().equals("Game finished")||boardManager.getGameStatus().endsWith("has won")){
-			newGame();
-			boardManager.setGameStatus("Playing");}
+				newGame();
+				boardManager.setGameStatus("Playing");}
 		}
 	}
 
@@ -111,7 +115,7 @@ public class noughts_n_crosses extends ApplicationAdapter {
 
 
 
-	public void   chooseSquareTouched(Vector3 touchPosn, Player currentPlayer) {
+	private void   chooseSquareTouched(Vector3 touchPosn, Player currentPlayer) {
 		boardManager.chooseSquare(touchPosn, backgrnd, currentPlayer);
 
 	}
@@ -121,4 +125,5 @@ public class noughts_n_crosses extends ApplicationAdapter {
 		boardManager.clearBoard();
 		boardManager.resetTurnCounter();
 	}
+
 }
