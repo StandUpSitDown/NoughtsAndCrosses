@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class noughts_n_crosses extends ApplicationAdapter {
 
@@ -19,6 +21,7 @@ public class noughts_n_crosses extends ApplicationAdapter {
 	private Texture nought;
 	private Texture cross;
 	private OrthographicCamera camera;
+	private Viewport viewport;
 	private BoardManager boardManager;
 	private Player playerOne, playerTwo, currentPlayer;
 	private FindWinner findWinner;
@@ -31,6 +34,8 @@ public class noughts_n_crosses extends ApplicationAdapter {
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
+		viewport = new FitViewport(SCREEN_WIDTH,SCREEN_HEIGHT,camera);
+		viewport.update(SCREEN_WIDTH, SCREEN_HEIGHT);
 		batch = new SpriteBatch();
 		underlayer = new Texture("underlayer.png");
 		backgrnd = new Texture("noughts_n_crosses_backgrnd_1080x1080.png");
@@ -49,6 +54,8 @@ public class noughts_n_crosses extends ApplicationAdapter {
 
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		batch.draw(underlayer, 0, 0);
 		batch.draw(backgrnd, (SCREEN_WIDTH - backgrnd.getWidth()) / 2, 0);
@@ -80,6 +87,11 @@ public class noughts_n_crosses extends ApplicationAdapter {
 
 	}
 
+	@Override
+	public void resize(int width,int height){
+		viewport.update(width, height);
+	}
+
 	private void drawFont(String textString){
 		BitmapFont font = new BitmapFont();
 		font.getData().setScale(4);
@@ -97,7 +109,7 @@ public class noughts_n_crosses extends ApplicationAdapter {
 
 			else if(boardManager.getGameStatus().equals("Playing")) {
 				Vector3 touchPosn = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-				camera.unproject(touchPosn);
+				viewport.unproject(touchPosn);
 				if (boardManager.getPlayerTurn()==1)
 					currentPlayer = playerOne;
 				else
