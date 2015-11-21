@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class noughts_n_crosses extends ApplicationAdapter {
@@ -34,7 +35,7 @@ public class noughts_n_crosses extends ApplicationAdapter {
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
-		viewport = new FitViewport(SCREEN_WIDTH,SCREEN_HEIGHT,camera);
+		viewport = new StretchViewport(SCREEN_WIDTH,SCREEN_HEIGHT,camera);
 		viewport.update(SCREEN_WIDTH, SCREEN_HEIGHT);
 		batch = new SpriteBatch();
 		underlayer = new Texture("underlayer.png");

@@ -11,9 +11,13 @@ public class BoardSquare {
         this.squareValue = 0;
     }
 
+    public boolean isSquareEmpty(){return  (squareValue==0);}
+
     public void setSquareEmpty(){
         this.squareValue = 0;
     }
+
+    public void setSquareValue(int value) {this.squareValue = value; }
 
     public boolean isSquareCross(){
         return (squareValue == -1);
